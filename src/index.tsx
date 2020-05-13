@@ -3,10 +3,27 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import { store } from './store';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+    body{
+        height:100vh;
+        background:black;
+        margin: 0;
+        font-family: -apple-system, 'Circular';
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+`;
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <GlobalStyle/>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
