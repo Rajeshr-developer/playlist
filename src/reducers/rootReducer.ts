@@ -5,6 +5,16 @@ const initialState = {
     albumslist: []
 }
 
+const GET_ORGANIZATION = `
+  {
+    organization(login: "the-road-to-learn-react") {
+      name
+      url
+    }
+  }
+`;
+
+
 const asyncAction = () => {
     return fetch('http://localhost:5000/Library');
 }
