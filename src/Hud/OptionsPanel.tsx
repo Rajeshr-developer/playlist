@@ -1,30 +1,40 @@
 import React, { Component } from 'react';
 import { Button } from '../components/button';
-import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
+import { CreateLibrary } from './CreateLibrary';
+import { Playlist } from './PlayLists';
 
-const titles = ["Favourite", "Recently Played", "Liked"];
+const titles = ["Made For You", " Recently Played", " Liked Songs ", " Albums", "Artists", "Podcasts"];
 
 const LeftPanel = styled.div`
-    width:20%;
+    width:16%;
     display:flex;
     height:100vh;
     flex-direction:column;
 `
-//  onSelect={dispatch({ type: '@@OPTIONS_SELECT' })}
 
-export const OptionsPanel:React.SFC = (): JSX.Element => {
+const Library = styled.div`
+    position:absolute;
+    top:25%;
+    height:50%;
+    display:flex;
+    flex-direction:column;
+`
 
-    const dispatch = useDispatch()
+export const OptionsPanel: React.SFC = (): JSX.Element => {
 
     return (
         <>
             <LeftPanel>
-                {
-                    titles.map((optionNames, index)=>{
-                        return <Button key={index} tname={optionNames}></Button>
-                    })
-                }
+                <Library>
+                    {
+                        titles.map((optionNames, index) => {
+                            return <Button style={{'height':'11%'}} key={index} tname={optionNames}></Button>
+                        })
+                    }
+                </Library>
+                <Playlist/>
+                <CreateLibrary />
             </LeftPanel>
         </>
     )

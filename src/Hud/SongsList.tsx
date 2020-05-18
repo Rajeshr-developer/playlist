@@ -66,13 +66,13 @@ const mapStateToProps = (state: any) => {
     console.log('state = ', state);
     return {
         album: state.albumState.selectedAlbum,
-        renderThis: state.albumState.renderThis
+        renderSongs: state.albumState.renderSongs
     }
 }
 
 interface SongsListProps {
     album: any | undefined;
-    renderThis: Boolean;
+    renderSongs: Boolean;
     dispatch: Dispatch<any>;
 }
 
@@ -80,7 +80,7 @@ class SongsList extends Component<SongsListProps> {
 
     static defaultProps = {
         album: [],
-        renderThis: false
+        renderSongs: false
     }
 
     componentWillReceiveProps(preProps: any, nextState: any) {
@@ -94,21 +94,23 @@ class SongsList extends Component<SongsListProps> {
 
     render() {
 
-        const { album, renderThis } = this.props;
-        
+        const { album, renderSongs } = this.props;
+
+        console.log('album = ', album, ' renderSongs = ', renderSongs);
+
         return (
 
-            !renderThis ? null :
+            !renderSongs ? null :
                 <>
                     <SongsContainer>
                         <AlbumImg src={defaultImage}></AlbumImg>
                         <AlbumSongs>
                             {
-                                album.map((value: any, indx: number) => {
+                                album && album.map((value: any, indx: number) => {
                                     return (
                                         <SongData key={indx}>
                                             <AlbumName>{value.title}</AlbumName>
-                                            <AlbumName style={{'marginLeft':'10px'}}>{value.artist}</AlbumName>
+                                            <AlbumName style={{ 'marginLeft': '10px' }}>{value.artist}</AlbumName>
                                         </SongData>
                                     )
                                 })

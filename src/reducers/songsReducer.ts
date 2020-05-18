@@ -2,7 +2,7 @@ import { actionInterface } from '../actions/actions';
 
 const initialState = {
     selectedAlbum: {},
-    renderThis: false
+    renderSongs: false
 }
 
 export const songsReducer = (state = initialState, action: actionInterface) => {
@@ -11,7 +11,7 @@ export const songsReducer = (state = initialState, action: actionInterface) => {
             return {
                 ...state,
                 selectedAlbum: action.payload,
-                renderThis: true
+                renderSongs: action.renderSongs
             }
         default:
             return state;

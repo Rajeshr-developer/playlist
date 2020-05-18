@@ -1,16 +1,20 @@
 import React from 'react';
 import { OptionsPanel } from './Hud/OptionsPanel';
 import AlbumsList from './Hud/AlbumsList';
-import { ActivityPanel } from './Hud/Activity';
+import { RightHud } from './Hud/RightHud';
+import LibraryPanel from './Hud/LibraryPanel';
 import SongsList from './Hud/SongsList';
+import { Header } from './Hud/Header';
 
 function App() {
   return (
     <>
+      <LibraryPanel/>
+      <Header/>
       <OptionsPanel />
       <AlbumsList />
       <SongsList />
-      <ActivityPanel />
+      <RightHud />
     </>
   );
 }

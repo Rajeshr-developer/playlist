@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface Props {
     tname?: string;
     onSelect?: any;
+    style?: any
 }
 
 const CustomButton = styled.button`
@@ -12,11 +13,13 @@ const CustomButton = styled.button`
     justify-content:center;
     font-family:Circular;
     display: flex;
+    border:none;
+    background:none;
     justify-content: flex-start;
 `
 
 export const Button = (props: Props) => {
     return (
-        <CustomButton onClick={props.onSelect}>{props.tname}</CustomButton>
+        <CustomButton style={props.style} onClick={props.onSelect}>{props.tname}</CustomButton>
     )
 }

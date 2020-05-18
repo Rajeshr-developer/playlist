@@ -1,27 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface Props {
-    tname?: string;
-    onSelect?: any;
+type textFieldProps = {
+    fontSize: any,
+    fontWeight?: any
 }
 
-const TitleBlock = styled.button`
-    color:white;
-    font-size:1em;
+export const TextField = styled.span<textFieldProps>`
+    display:flex;
+    align-items:center;
     justify-content:center;
+    color: white;
     font-family:Circular;
-    border:2px solid white;
-    background-color:#000;
-    display: flex;
-    justify-content: flex-start;
+    font-weight: ${props => props.fontWeight ? props.fontWeight  : "lighter"};
+    font-size: ${props => (props.fontSize)};
+    text-align:center;
 `
-const SpanElement = styled.h1`
-    cursor:pointer;
-    color:#FFFFFF;
-`
-export const TextField = (props: Props) => {
-    return (
-        <TitleBlock onClick={props.onSelect}>{props.tname}</TitleBlock>
-    )
-}

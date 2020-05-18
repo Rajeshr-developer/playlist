@@ -3,6 +3,8 @@ import React, { Component, Suspense, Dispatch } from 'react';
 import { connect } from 'react-redux';
 import { asyncReducer } from '../reducers/rootReducer';
 import { SelectAlbum } from '../actions/actions';
+import { TextField } from '../components/textfield';
+import { GET_ALBUM } from '../reducers/queries';
 
 const defaultImage = require('../music.png');
 
@@ -12,21 +14,9 @@ const Loading = styled.span`
     justify-content:center;
 `
 
-const Albumname = styled.span`
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width: 150px;
-    color: white;
-    font-family:Circular;
-    font-size: 0.7em;
-    text-align:center;
-`
-
 const AlbumImg = styled.img`
-    height:82%;
-    margin-left: 9px;
-    margin-top: 8px;
+    height:auto;
+    max-width:100%;
     cursor: pointer;
 `
 
@@ -37,33 +27,37 @@ const AlbumContainer = styled.div`
     left: 10%;
     left: 16%;
     top: 0%;
-    background-image: linear-gradient(#434343, #000000);
+    background-image: linear-gradient(#434343,#000000,#000000,#000000);
 `
 
-const AlbumLists = styled.div`
-    width:100%;
-    height: 70%;
+const AlbumLists = styled.ul`
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    height: 100%;
     overflow:scroll;
-    position:absolute;
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-row-gap:10px;
-    grid-auto-rows: 150px;
-    grid-gap: 15px;
+    position:relative;
 `
 
 const Category = styled.div`
     height: 20%;
-`
-
-const Header = styled.div`
-    height: 10%;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
 `
 
 const Container = styled.div`
-    float: right;
-    width: 0px;
+    width:30.1%;
+    float:left;
+    padding:9px;
 `
+
+const textStyles = {
+    'display': 'flex',
+    'justify-content': 'flex-start',
+    'width': '97%'
+}
 
 const mapStateToProps = (state: any) => {
     return {
@@ -78,10 +72,6 @@ interface AlbumProps {
 
 class AlbumsList extends Component<AlbumProps> {
 
-    // static getDerivedStateFromProps(nextProps: any, prevState: any) {
-
-    // }
-
     static defaultProps = {
         albumslist: {}
     }
@@ -91,7 +81,7 @@ class AlbumsList extends Component<AlbumProps> {
     }
 
     componentDidMount() {
-        this.props.dispatch(asyncReducer())
+        this.props.dispatch(asyncReducer(GET_ALBUM, 'GET_ALBUM'))
     }
 
     render() {
@@ -103,16 +93,18 @@ class AlbumsList extends Component<AlbumProps> {
         return (
             <>
                 <AlbumContainer>
-                    <Header />
-                    <Category />
+                    <Category>
+                        <TextField style={textStyles} fontWeight={'bold'} fontSize={'2em'}>{'Made For You'}</TextField>
+                        <TextField style={textStyles} fontWeight={'bold'} fontSize={'1em'}>{'Your Daily Mixes'}</TextField>
+                    </Category>
                     <Suspense fallback={<Loading>{'Loading...!'}</Loading>}>
                         <AlbumLists>
                             {
                                 Object.keys(albumslist).map((value, indx) => {
                                     return (
                                         <Container key={indx}>
-                                            <AlbumImg src={defaultImage} onClick={() => dispatch(SelectAlbum(albumslist[value]))}></AlbumImg>
-                                            <Albumname>{value}</Albumname>
+                                            <AlbumImg src={defaultImage} onClick={() => dispatch(SelectAlbum(albumslist[value], true))}></AlbumImg>
+                                            <TextField fontSize={'1em'}>{value}</TextField>
                                         </Container>
                                     )
                                 })

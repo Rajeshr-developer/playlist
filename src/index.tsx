@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
         height:100vh;
         background:black;
         margin: 0;
+        overflow:hidden;
         font-family: -apple-system, 'Circular';
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -21,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <GlobalStyle/>
+      <GlobalStyle />
       <App />
     </Provider>
   </React.StrictMode>,

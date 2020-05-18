@@ -1,31 +1,39 @@
-import { GetAlbumsList, actionInterface } from '../actions/actions';
+import { GetAlbumsList, SelectAlbum, actionInterface } from '../actions/actions';
+import { GET_ALBUM, SEARCH_ALBUM, MUTATE_LIBRARY } from './queries';
 
 const initialState = {
     apiLoaded: false,
-    albumslist: []
+    albumslist: [],
+    libraryState: false
 }
 
-const GET_ORGANIZATION = `
-  {
-    organization(login: "the-road-to-learn-react") {
-      name
-      url
-    }
-  }
-`;
-
-
-const asyncAction = () => {
-    return fetch('http://localhost:5000/Library');
+const asyncAction = (queryType?: String, value?: any) => {
+    console.log('queryType = ', queryType);
+    return fetch('http://localhost:4000/graphql', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            query: queryType,
+        }),
+    })
 }
 
-export const asyncReducer = () => {
+export const asyncReducer = (queryType?: String, type?: String) => {
     return (dispatch: any) => {
-        asyncAction()
-            .then(_data => _data.json())
-            .then((_val) => {
-                dispatch(GetAlbumsList(_val))
-            });
+        asyncAction(queryType)
+            .then(response => {
+                return response.json()
+            })
+            .then(response => {
+                console.log('response = ', response);
+                if (type == "GET_ALBUM") {
+                    dispatch(GetAlbumsList(response.data.getAlbums));
+                } else {
+                    dispatch(SelectAlbum(response.data.SongsDB, true));
+                }
+            })
     }
 }
 
@@ -47,6 +55,12 @@ export const rootReducer = (state = initialState, action: actionInterface) => {
                 ...state,
                 apiLoaded: true
             }
+        case "@@PLAYLIST_TOGGLE": {
+            return {
+                ...state,
+                libraryState: action.payload
+            }
+        }
         case "@@OPTIONS_SELECT":
             return {
                 ...state,
